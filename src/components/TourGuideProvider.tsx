@@ -1,7 +1,7 @@
 import mitt from 'mitt'
 import * as React from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { TourGuideContext } from '../components/TourGuideContext'
+import { TourGuideContext, ITourGuideContext } from '../components/TourGuideContext'
 import { useIsMounted } from '../hooks/useIsMounted'
 import { IStep, Labels, StepObject, Steps } from '../types'
 import * as utils from '../utilities'
@@ -30,6 +30,7 @@ export interface TourGuideProviderProps {
   borderRadius?: number
   animationDuration?: number
   children: React.ReactNode
+  context?: React.Context<ITourGuideContext>
 }
 
 export const TourGuideProvider = ({
@@ -45,6 +46,7 @@ export const TourGuideProvider = ({
   borderRadius,
   verticalOffset,
   startAtMount = false,
+  context,
 }: TourGuideProviderProps) => {
   const [visible, setVisible] = useState<boolean | undefined>(undefined)
   const [currentStep, updateCurrentStep] = useState<IStep | undefined>()
@@ -131,6 +133,7 @@ export const TourGuideProvider = ({
   }
 
   const registerStep = (step: IStep) => {
+    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX REGISTER STEP')
     setSteps((previousSteps) => {
       return {
         ...previousSteps,
@@ -172,9 +175,11 @@ export const TourGuideProvider = ({
     }
   }
 
+  const ContextProvider = context?.Provider ?? TourGuideContext.Provider
+
   return (
     <View style={[styles.container, wrapperStyle]}>
-      <TourGuideContext.Provider
+      <ContextProvider
         value={{
           eventEmitter,
           registerStep,
@@ -206,7 +211,7 @@ export const TourGuideProvider = ({
             borderRadius,
           }}
         />
-      </TourGuideContext.Provider>
+      </ContextProvider>
     </View>
   )
 }

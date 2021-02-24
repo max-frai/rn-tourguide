@@ -17,6 +17,9 @@ export interface ITourGuideContext {
   start?(fromStep?: number): void
   stop?(): void
 }
-export const TourGuideContext = React.createContext<ITourGuideContext>({
+
+export const TourGuideContextDefaultValue: ITourGuideContext = {
   canStart: false,
-})
+}
+
+export const TourGuideContext = React.createContext<ITourGuideContext>(TourGuideContextDefaultValue)

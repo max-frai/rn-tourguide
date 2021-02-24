@@ -2,6 +2,7 @@ import * as React from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { BorderRadiusObject, Shape } from '../types'
 import { TourGuideZone } from './TourGuideZone'
+import { ITourGuideContext } from './TourGuideContext'
 
 interface TourGuideZoneByPositionProps {
   zone: number
@@ -18,6 +19,7 @@ interface TourGuideZoneByPositionProps {
   keepTooltipPosition?: boolean
   tooltipBottomOffset?: number
   text?: string
+  context?: React.Context<ITourGuideContext>
 }
 
 export const TourGuideZoneByPosition = ({
@@ -35,6 +37,7 @@ export const TourGuideZoneByPosition = ({
   tooltipBottomOffset,
   borderRadiusObject,
   text,
+  context,
 }: TourGuideZoneByPositionProps) => {
   if (!isTourGuide) {
     return null
@@ -54,6 +57,7 @@ export const TourGuideZoneByPosition = ({
           tooltipBottomOffset,
           borderRadiusObject,
           text,
+          context,
         }}
         style={{
           position: 'absolute',

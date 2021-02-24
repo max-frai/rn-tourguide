@@ -1,3 +1,11 @@
+# FORK
+
+This is a fork of rn-tourguide which fixes following issues:
+* TourGuideZoneByPosition supports `text` props (I actually just released original code, did not do
+    any code changes).
+* Support custom contexts. This feature allows to have several tutorials on multiple screens which
+    will not conflict.
+
 <h1 align="center">RN-TourGuide</h1>
 
 <p align="center">
