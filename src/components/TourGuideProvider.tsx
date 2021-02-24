@@ -133,7 +133,6 @@ export const TourGuideProvider = ({
   }
 
   const registerStep = (step: IStep) => {
-    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX REGISTER STEP')
     setSteps((previousSteps) => {
       return {
         ...previousSteps,
