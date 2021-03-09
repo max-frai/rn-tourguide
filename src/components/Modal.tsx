@@ -187,9 +187,9 @@ export class Modal extends React.Component<ModalProps, State> {
       verticalPosition === 'bottom'
         ? tooltip.top
         : obj.top -
-          MARGIN -
-          135 -
-          (this.props.currentStep!.tooltipBottomOffset || 0)
+        MARGIN -
+        135 -
+        (this.props.currentStep!.tooltipBottomOffset || 0)
     const translateAnim = Animated.timing(this.state.tooltipTranslateY, {
       toValue,
       duration,
@@ -257,8 +257,8 @@ export class Modal extends React.Component<ModalProps, State> {
     this.props.stop()
   }
 
-  renderMask = () => (
-    <SvgMask
+  renderMask = () => {
+    return <SvgMask
       style={styles.overlayContainer}
       size={this.state.size!}
       position={this.state.position!}
@@ -269,7 +269,7 @@ export class Modal extends React.Component<ModalProps, State> {
       maskOffset={this.props.maskOffset}
       borderRadius={this.props.borderRadius}
     />
-  )
+  }
 
   renderTooltip() {
     const { tooltipComponent: TooltipComponent, visible } = this.props

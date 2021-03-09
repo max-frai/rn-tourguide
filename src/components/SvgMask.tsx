@@ -6,8 +6,8 @@ import {
   LayoutChangeEvent,
   Platform,
   StyleProp,
-  View,
   ViewStyle,
+  TouchableOpacity,
 } from 'react-native'
 import Svg, { PathProps } from 'react-native-svg'
 import { IStep, ValueXY } from '../types'
@@ -39,9 +39,9 @@ interface State {
 
 const FIRST_PATH = `M0,0H${screenDimensions.width}V${
   screenDimensions.height
-}H0V0ZM${screenDimensions.width / 2},${
+  }H0V0ZM${screenDimensions.width / 2},${
   screenDimensions.height / 2
-} h 1 v 1 h -1 Z`
+  } h 1 v 1 h -1 Z`
 
 const IS_WEB = Platform.OS !== 'web'
 
@@ -73,6 +73,10 @@ export class SvgMask extends Component<Props, State> {
     }
 
     this.listenerID = this.state.animation.addListener(this.animationListener)
+  }
+
+  componentDidMount() {
+    this.animate()
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -176,10 +180,12 @@ export class SvgMask extends Component<Props, State> {
       return null
     }
     return (
-      <View
-        style={this.props.style}
+      <TouchableOpacity
+        style={[this.props.style]}
         onLayout={this.handleLayout}
-        pointerEvents='none'
+        onPress={(event) => {
+          event.stopPropagation()
+        }}
       >
         <Svg
           pointerEvents='none'
@@ -187,6 +193,7 @@ export class SvgMask extends Component<Props, State> {
           height={this.state.canvasSize.y}
         >
           <AnimatedSvgPath
+            pointerEvents='none'
             ref={this.mask}
             fill={this.props.backdropColor}
             strokeWidth={0}
@@ -195,7 +202,7 @@ export class SvgMask extends Component<Props, State> {
             opacity={this.state.opacity as any}
           />
         </Svg>
-      </View>
+      </TouchableOpacity>
     )
   }
 }
