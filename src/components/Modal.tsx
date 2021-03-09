@@ -137,7 +137,9 @@ export class Modal extends React.Component<ModalProps, State> {
       height: 0,
     },
   ) {
+    console.log('XXXXXX Modal.tsx:139 animating')
     const layout = await this.measure()
+    console.log('XXXXXX Modal.tsx:141 layout', layout)
     if (!this.props.androidStatusBarVisible && Platform.OS === 'android') {
       obj.top -= StatusBar.currentHeight || 30
     }
@@ -187,9 +189,9 @@ export class Modal extends React.Component<ModalProps, State> {
       verticalPosition === 'bottom'
         ? tooltip.top
         : obj.top -
-          MARGIN -
-          135 -
-          (this.props.currentStep!.tooltipBottomOffset || 0)
+        MARGIN -
+        135 -
+        (this.props.currentStep!.tooltipBottomOffset || 0)
     const translateAnim = Animated.timing(this.state.tooltipTranslateY, {
       toValue,
       duration,
@@ -215,6 +217,8 @@ export class Modal extends React.Component<ModalProps, State> {
       opacityAnim.start()
     }
 
+    console.log('XXXXXX Modal.tsx:219 tooltip', tooltip)
+    console.log('XXXXXX Modal.tsx:220 layout', layout)
     this.setState({
       tooltip,
       layout,
@@ -230,6 +234,7 @@ export class Modal extends React.Component<ModalProps, State> {
   }
 
   animateMove(obj = {}): Promise<void> {
+    console.log('XXXXXX Modal.tsx:233 called in animateMove')
     return new Promise((resolve) => {
       this.setState({ containerVisible: true }, () =>
         this._animateMove(obj as any).then(resolve),
@@ -257,19 +262,20 @@ export class Modal extends React.Component<ModalProps, State> {
     this.props.stop()
   }
 
-  renderMask = () => (
-    <SvgMask
+  renderMask = () => {
+    console.log('XXXXXX Modal.tsx:262 RENDERING MASK')
+    return <SvgMask
       style={styles.overlayContainer}
       size={this.state.size!}
       position={this.state.position!}
       easing={this.props.easing}
       animationDuration={this.props.animationDuration}
-      backdropColor={this.props.backdropColor}
+      backdropColor={'#000000'}
       currentStep={this.props.currentStep}
       maskOffset={this.props.maskOffset}
       borderRadius={this.props.borderRadius}
     />
-  )
+  }
 
   renderTooltip() {
     const { tooltipComponent: TooltipComponent, visible } = this.props
@@ -306,8 +312,12 @@ export class Modal extends React.Component<ModalProps, State> {
   }
 
   render() {
+    console.log('XXXXXX Modal.tsx:308 this.state.containerVisible', this.state.containerVisible)
+    console.log('XXXXXX Modal.tsx:309 this.props.visible', this.props.visible)
     const containerVisible = this.state.containerVisible || this.props.visible
+    console.log('XXXXXX Modal.tsx:311 this.containerVisible', containerVisible)
     const contentVisible = this.state.layout && containerVisible
+    console.log('XXXXXX Modal.tsx:313 this.state.layout', this.state.layout)
     if (!containerVisible) {
       return null
     }
