@@ -204,7 +204,6 @@ export class Modal extends React.Component<ModalProps, State> {
       delay: duration,
       useNativeDriver: true,
     })
-    this.state.opacity.setValue(0)
     if (
       // @ts-ignore
       toValue !== this.state.tooltipTranslateY._value &&
@@ -245,6 +244,7 @@ export class Modal extends React.Component<ModalProps, State> {
   }
 
   handleNext = () => {
+    this.state.opacity.setValue(0);
     this.props.next()
   }
 
